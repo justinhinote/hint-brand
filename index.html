@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HINT — Brand Trust Architecture | Justin Hinote</title>
+<title>HINT: Brand Trust Architecture | Justin Hinote</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #0e1117;
@@ -15,15 +15,12 @@
     --hint-green-light: #40916c;
     --hint-green-pale: #b7e4c7;
     --gold: #c9963d;
-    --gold-light: #f0c060;
     --mist: #8a9ba8;
-    --slate: #2c3e50;
     --line: rgba(45,106,79,0.2);
-    --section-pad: 120px 80px;
+    --section-pad: 80px 72px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -34,7 +31,7 @@
     cursor: none;
   }
 
-  /* Custom cursor */
+  /* Cursor */
   .cursor {
     position: fixed;
     width: 8px; height: 8px;
@@ -42,8 +39,8 @@
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s ease, opacity 0.3s;
     transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
   }
   .cursor-ring {
     position: fixed;
@@ -52,8 +49,19 @@
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
-    transition: transform 0.25s ease, opacity 0.3s;
     transform: translate(-50%, -50%);
+    transition: transform 0.25s ease;
+  }
+
+  /* Progress */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--hint-green), var(--gold));
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s;
   }
 
   /* Nav */
@@ -68,7 +76,6 @@
     background: linear-gradient(180deg, rgba(14,17,23,0.95) 0%, transparent 100%);
     backdrop-filter: blur(4px);
   }
-
   .nav-logo {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -76,13 +83,11 @@
     color: var(--hint-green-pale);
     text-transform: uppercase;
   }
-
   .nav-links {
     display: flex;
     gap: 36px;
     list-style: none;
   }
-
   .nav-links a {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -92,169 +97,14 @@
     text-decoration: none;
     transition: color 0.3s;
   }
-
   .nav-links a:hover { color: var(--hint-green-pale); }
 
-  /* Progress bar */
-  .progress-bar {
-    position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--hint-green), var(--gold));
-    z-index: 200;
-    transition: width 0.1s;
-    width: 0%;
-  }
-
   /* Section base */
-  section {
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-  }
+  section { min-height: 100vh; position: relative; overflow: hidden; }
 
-  /* ========== HERO ========== */
-  #hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 160px 80px 120px;
-    background: var(--ink);
-    position: relative;
-  }
-
-  .hero-grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(45,106,79,0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(45,106,79,0.07) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-  }
-
-  .hero-glow {
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(45,106,79,0.15) 0%, transparent 70%);
-    top: -100px; right: -100px;
-    pointer-events: none;
-  }
-
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--hint-green-pale);
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(64px, 8vw, 120px);
-    font-weight: 300;
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    max-width: 900px;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.4s forwards;
-  }
-
-  .hero-headline em {
-    font-style: italic;
-    color: var(--hint-green-pale);
-  }
-
-  .hero-subtext {
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--mist);
-    max-width: 520px;
-    line-height: 1.7;
-    margin-top: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.7s forwards;
-  }
-
-  .hero-meta {
-    display: flex;
-    gap: 48px;
-    margin-top: 80px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.9s forwards;
-  }
-
-  .hero-meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .hero-meta-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    color: var(--mist);
-    text-transform: uppercase;
-  }
-
-  .hero-meta-value {
-    font-size: 14px;
-    color: var(--paper);
-    font-weight: 500;
-  }
-
-  .hero-scroll-cue {
-    position: absolute;
-    bottom: 48px;
-    left: 80px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    opacity: 0;
-    animation: fadeIn 1s 1.4s forwards;
-  }
-
-  .scroll-line {
-    width: 48px;
-    height: 1px;
-    background: var(--hint-green);
-    animation: expandLine 1s 1.5s forwards;
-    transform-origin: left;
-    transform: scaleX(0);
-  }
-
-  .scroll-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    color: var(--mist);
-    text-transform: uppercase;
-  }
-
-  /* ========== SECTION PATTERNS ========== */
-
-  /* Dark sections */
-  .s-dark {
-    background: var(--ink);
-    padding: var(--section-pad);
-  }
-
-  /* Light sections */
-  .s-light {
-    background: var(--paper);
-    color: var(--ink);
-    padding: var(--section-pad);
-  }
-
-  /* Green accent sections */
-  .s-green {
-    background: var(--hint-green);
-    padding: var(--section-pad);
-  }
+  .s-dark { background: var(--ink); padding: var(--section-pad); }
+  .s-light { background: var(--paper); color: var(--ink); padding: var(--section-pad); }
+  .s-green { background: var(--hint-green); padding: var(--section-pad); }
 
   /* Section label */
   .section-label {
@@ -268,92 +118,62 @@
     align-items: center;
     gap: 16px;
   }
-
   .s-light .section-label { color: var(--hint-green); }
-  .s-green .section-label { color: rgba(255,255,255,0.6); }
-
   .section-label::before {
     content: '';
     display: block;
-    width: 24px;
-    height: 1px;
+    width: 24px; height: 1px;
     background: currentColor;
   }
+  .section-num { opacity: 0.5; margin-right: 4px; }
 
-  .section-num {
-    color: var(--hint-green-pale);
-    opacity: 0.5;
-    margin-right: 4px;
-  }
-  .s-light .section-num { color: var(--hint-green); }
-
-  /* Section headline */
+  /* Headlines */
   .section-headline {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(40px, 5vw, 72px);
-    font-weight: 300;
+    font-size: clamp(44px, 5vw, 76px);
+    font-weight: 400;
     line-height: 1.05;
     letter-spacing: -0.02em;
     max-width: 800px;
-    margin-bottom: 48px;
-  }
-
-  .section-headline em {
+    margin-bottom: 32px;
     font-style: italic;
     color: var(--hint-green-pale);
   }
-
   .s-light .section-headline em { color: var(--hint-green); }
   .s-green .section-headline { color: white; }
   .s-green .section-headline em { color: var(--hint-green-pale); }
 
-  /* Body text */
+  /* Body text: bumped to 18px/500 */
   .body-text {
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 1.75;
     color: var(--mist);
     max-width: 620px;
   }
+  .s-light .body-text { color: #4e5a66; }
+  .s-green .body-text { color: rgba(255,255,255,0.8); }
 
-  .s-light .body-text { color: #5a6470; }
-  .s-green .body-text { color: rgba(255,255,255,0.75); }
-
-  /* Large pull quote */
+  /* Pull quote */
   .pull-quote {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(28px, 3.5vw, 48px);
-    font-weight: 300;
+    font-size: clamp(30px, 3.5vw, 52px);
+    font-weight: 400;
     font-style: italic;
     line-height: 1.3;
     color: var(--paper);
     border-left: 2px solid var(--hint-green);
     padding-left: 32px;
-    margin: 48px 0;
+    margin: 32px 0;
     max-width: 680px;
   }
+  .s-light .pull-quote { color: var(--ink); border-left-color: var(--hint-green); }
 
-  .s-light .pull-quote {
-    color: var(--ink);
-    border-left-color: var(--hint-green);
-  }
+  /* Layouts */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+  .two-col-wide { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: start; }
 
-  /* Two-col layout */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  .two-col-wide {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  /* Stat block */
+  /* Stats */
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -362,26 +182,18 @@
     border: 1px solid var(--line);
     margin: 64px 0;
   }
-
-  .stat-block {
-    background: var(--ink);
-    padding: 40px 32px;
-  }
-
+  .stat-block { background: var(--ink); padding: 40px 32px; }
   .s-light .stat-grid { background: rgba(45,106,79,0.15); border-color: rgba(45,106,79,0.15); }
   .s-light .stat-block { background: var(--paper); }
-
   .stat-num {
     font-family: 'Cormorant Garamond', serif;
     font-size: 56px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--hint-green-pale);
     line-height: 1;
     margin-bottom: 8px;
   }
-
   .s-light .stat-num { color: var(--hint-green); }
-
   .stat-label {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -389,37 +201,25 @@
     text-transform: uppercase;
     color: var(--mist);
   }
-
   .stat-detail {
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--mist);
     margin-top: 8px;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   /* Pillar cards */
-  .pillar-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 64px;
-  }
-
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
   .pillar-card {
     border: 1px solid var(--line);
-    padding: 40px 32px;
+    padding: 32px 28px;
     position: relative;
     transition: border-color 0.3s, transform 0.3s;
   }
-
-  .pillar-card:hover {
-    border-color: var(--hint-green);
-    transform: translateY(-4px);
-  }
-
+  .pillar-card:hover { border-color: var(--hint-green); transform: translateY(-4px); }
   .s-light .pillar-card { border-color: rgba(45,106,79,0.2); background: white; box-shadow: 0 2px 20px rgba(0,0,0,0.04); }
   .s-light .pillar-card:hover { border-color: var(--hint-green); box-shadow: 0 8px 40px rgba(45,106,79,0.12); }
-
   .pillar-num {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -427,52 +227,34 @@
     color: var(--hint-green-pale);
     margin-bottom: 24px;
   }
-
   .s-light .pillar-num { color: var(--hint-green); }
-
   .pillar-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 400;
     margin-bottom: 16px;
     color: var(--paper);
   }
-
   .s-light .pillar-title { color: var(--ink); }
-
   .pillar-body {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 1.7;
     color: var(--mist);
-    font-weight: 300;
   }
-
-  .s-light .pillar-body { color: #6b7787; }
-
+  .s-light .pillar-body { color: #5a6470; }
   .pillar-accent {
     position: absolute;
     top: 0; left: 0;
-    width: 0;
-    height: 2px;
+    width: 0; height: 2px;
     background: var(--hint-green);
     transition: width 0.4s 0.1s;
   }
-
   .pillar-card:hover .pillar-accent { width: 100%; }
 
-  /* Trust architecture diagram */
-  .arch-diagram {
-    margin: 64px 0;
-    position: relative;
-  }
-
-  .arch-layer {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 0;
-    margin-bottom: 2px;
-  }
-
+  /* Trust architecture */
+  .arch-diagram { margin: 64px 0; }
+  .arch-layer { display: grid; grid-template-columns: 200px 1fr; gap: 0; margin-bottom: 2px; }
   .arch-label {
     background: var(--hint-green);
     padding: 24px 28px;
@@ -484,7 +266,6 @@
     text-transform: uppercase;
     color: rgba(255,255,255,0.9);
   }
-
   .arch-content {
     border: 1px solid var(--line);
     border-left: none;
@@ -493,46 +274,26 @@
     gap: 48px;
     align-items: center;
   }
-
   .arch-item {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--mist);
     display: flex;
     align-items: center;
     gap: 12px;
   }
+  .arch-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hint-green-pale); flex-shrink: 0; }
 
-  .arch-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--hint-green-pale);
-    flex-shrink: 0;
-  }
-
-  /* Timeline / roadmap */
-  .roadmap {
-    margin-top: 64px;
-    position: relative;
-  }
-
+  /* Roadmap */
+  .roadmap { margin-top: 64px; position: relative; }
   .roadmap::before {
     content: '';
     position: absolute;
-    left: 148px;
-    top: 0; bottom: 0;
+    left: 148px; top: 0; bottom: 0;
     width: 1px;
     background: var(--line);
   }
-
-  .roadmap-item {
-    display: grid;
-    grid-template-columns: 148px 1fr;
-    gap: 0;
-    margin-bottom: 48px;
-    position: relative;
-  }
-
+  .roadmap-item { display: grid; grid-template-columns: 148px 1fr; gap: 0; margin-bottom: 32px; position: relative; }
   .roadmap-time {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -543,58 +304,34 @@
     text-align: right;
     padding-top: 4px;
   }
-
   .roadmap-dot {
     position: absolute;
-    left: 140px;
-    top: 4px;
+    left: 140px; top: 4px;
     width: 16px; height: 16px;
     border-radius: 50%;
     background: var(--ink);
     border: 2px solid var(--hint-green);
     z-index: 1;
   }
-
-  .roadmap-active .roadmap-dot {
-    background: var(--hint-green);
-    box-shadow: 0 0 0 4px rgba(45,106,79,0.2);
-  }
-
-  .roadmap-content {
-    padding-left: 40px;
-  }
-
+  .roadmap-active .roadmap-dot { background: var(--hint-green); box-shadow: 0 0 0 4px rgba(45,106,79,0.2); }
+  .roadmap-content { padding-left: 40px; }
   .roadmap-phase {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 400;
     color: var(--paper);
     margin-bottom: 8px;
   }
-
   .roadmap-items {
-    font-size: 13px;
+    font-size: 16px;
+    font-weight: 500;
     color: var(--mist);
-    font-weight: 300;
     line-height: 1.7;
   }
 
-  /* Experience cards */
-  .exp-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
-    background: var(--line);
-    margin-top: 48px;
-  }
-
-  .exp-card {
-    background: var(--ink);
-    padding: 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
+  /* Experience grid */
+  .exp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--line); margin-top: 48px; }
+  .exp-card { background: var(--ink); padding: 32px; position: relative; overflow: hidden; }
   .exp-card::before {
     content: '';
     position: absolute;
@@ -603,9 +340,7 @@
     background: var(--hint-green);
     transition: width 0.4s;
   }
-
   .exp-card:hover::before { width: 100%; }
-
   .exp-co {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -614,22 +349,19 @@
     text-transform: uppercase;
     margin-bottom: 12px;
   }
-
   .exp-role {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 400;
     margin-bottom: 16px;
     color: var(--paper);
   }
-
   .exp-proof {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 500;
     color: var(--mist);
-    line-height: 1.65;
+    line-height: 1.7;
   }
-
   .exp-badge {
     display: inline-block;
     margin-top: 16px;
@@ -642,55 +374,19 @@
     color: var(--hint-green-pale);
   }
 
-  /* Big statement section */
-  #thesis {
-    padding: 160px 80px;
-    background: linear-gradient(135deg, #0e1117 0%, #162520 100%);
-    position: relative;
-  }
-
-  .thesis-bg-text {
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 320px;
-    font-weight: 300;
-    color: rgba(45,106,79,0.05);
-    top: 50%;
-    right: -40px;
-    transform: translateY(-50%);
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -0.05em;
-  }
-
-  /* Three trust dimensions */
-  .trust-dims {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    margin-top: 64px;
-    border: 1px solid var(--line);
-  }
-
-  .trust-dim {
-    padding: 48px 40px;
-    border-right: 1px solid var(--line);
-    position: relative;
-  }
-
+  /* Trust dimensions */
+  .trust-dims { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 40px; border: 1px solid var(--line); }
+  .trust-dim { padding: 36px 32px; border-right: 1px solid var(--line); position: relative; }
   .trust-dim:last-child { border-right: none; }
-
   .trust-dim-icon {
     font-family: 'Cormorant Garamond', serif;
     font-size: 72px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--hint-green-pale);
     line-height: 1;
     margin-bottom: 24px;
     opacity: 0.6;
   }
-
   .trust-dim-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 28px;
@@ -698,14 +394,12 @@
     margin-bottom: 16px;
     color: var(--paper);
   }
-
   .trust-dim-body {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 500;
     color: var(--mist);
     line-height: 1.7;
   }
-
   .trust-dim-hover {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -715,37 +409,12 @@
     transform-origin: left;
     transition: transform 0.4s;
   }
-
   .trust-dim:hover .trust-dim-hover { transform: scaleX(1); }
 
-  /* Two-sided trust section */
-  #two-sided {
-    background: var(--paper);
-    color: var(--ink);
-  }
-
-  .split-panel {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 100vh;
-  }
-
-  .split-left {
-    background: var(--ink);
-    padding: 120px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .split-right {
-    background: var(--hint-green);
-    padding: 120px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
+  /* Split panel */
+  .split-panel { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+  .split-left { background: var(--ink); padding: 80px 72px; display: flex; flex-direction: column; justify-content: center; }
+  .split-right { background: var(--hint-green); padding: 80px 72px; display: flex; flex-direction: column; justify-content: center; }
   .split-eyebrow {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -753,59 +422,136 @@
     text-transform: uppercase;
     margin-bottom: 24px;
   }
-
   .split-left .split-eyebrow { color: var(--hint-green-pale); }
   .split-right .split-eyebrow { color: rgba(255,255,255,0.6); }
-
   .split-headline {
     font-family: 'Cormorant Garamond', serif;
     font-size: 52px;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.05;
     margin-bottom: 40px;
   }
-
   .split-left .split-headline { color: var(--paper); }
   .split-right .split-headline { color: white; }
-
-  .split-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
+  .split-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
   .split-list li {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.6;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.65;
     display: flex;
     gap: 16px;
     align-items: flex-start;
   }
-
   .split-left .split-list li { color: var(--mist); }
-  .split-right .split-list li { color: rgba(255,255,255,0.8); }
-
-  .split-list-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 8px;
-  }
-
+  .split-right .split-list li { color: rgba(255,255,255,0.85); }
+  .split-list-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
   .split-left .split-list-dot { background: var(--hint-green-pale); }
   .split-right .split-list-dot { background: rgba(255,255,255,0.5); }
 
-  /* Closing section */
-  #close {
-    background: var(--ink);
-    padding: 160px 80px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  /* Hero */
+  #hero { display: flex; flex-direction: column; justify-content: center; padding: 120px 72px 80px; background: var(--ink); }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(45,106,79,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(45,106,79,0.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,106,79,0.15) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--hint-green-pale);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(68px, 8vw, 124px);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero-headline em { font-style: italic; color: var(--hint-green-pale); }
+  .hero-subtext {
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--mist);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 8px; }
+  .hero-meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+  .hero-meta-value { font-size: 15px; font-weight: 600; color: var(--paper); }
+  .hero-scroll-cue {
+    position: absolute;
+    bottom: 48px; left: 80px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeIn 1s 1.4s forwards;
+  }
+  .scroll-line {
+    width: 48px; height: 1px;
+    background: var(--hint-green);
+    animation: expandLine 1s 1.5s forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  .scroll-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--mist);
+    text-transform: uppercase;
   }
 
+  /* Thesis section */
+  #thesis { padding: 100px 72px; background: linear-gradient(135deg, #0e1117 0%, #162520 100%); position: relative; }
+  .thesis-bg-text {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 400;
+    color: rgba(45,106,79,0.05);
+    top: 50%; right: -40px;
+    transform: translateY(-50%);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
+  /* Close */
+  #close { background: var(--ink); padding: 100px 72px; text-align: center; position: relative; overflow: hidden; }
   .close-glow {
     position: absolute;
     width: 800px; height: 800px;
@@ -814,39 +560,31 @@
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
-
   .close-headline {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(48px, 6vw, 88px);
-    font-weight: 300;
+    font-size: clamp(52px, 6vw, 92px);
+    font-weight: 400;
     line-height: 1;
     letter-spacing: -0.02em;
     max-width: 900px;
     margin: 0 auto 40px;
   }
-
-  .close-headline em {
-    font-style: italic;
-    color: var(--hint-green-pale);
-  }
-
+  .close-headline em { font-style: italic; color: var(--hint-green-pale); }
   .close-sub {
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 19px;
+    font-weight: 500;
     color: var(--mist);
-    max-width: 520px;
+    max-width: 560px;
     margin: 0 auto 64px;
     line-height: 1.75;
   }
-
   .close-sig {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
+    font-size: 36px;
     font-style: italic;
+    font-weight: 400;
     color: var(--hint-green-pale);
-    font-weight: 300;
   }
-
   .close-sig-sub {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -856,86 +594,14 @@
     margin-top: 12px;
   }
 
-  /* Divider */
-  .divider {
-    width: 48px;
-    height: 1px;
-    background: var(--hint-green);
-    margin: 40px 0;
-  }
+  /* Banner */
+  .banner { background: var(--hint-green); padding: 32px 80px; display: flex; align-items: center; gap: 24px; }
+  .banner-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; font-weight: 400; color: white; }
+  .banner-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-left: auto; white-space: nowrap; }
 
-  .s-light .divider { background: var(--hint-green); }
-  .divider-center { margin: 40px auto; }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes expandLine {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-
-  /* Scroll reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-  .reveal-delay-5 { transition-delay: 0.5s; }
-
-  /* Horizontal rule / separator */
-  .rule { width: 100%; height: 1px; background: var(--line); margin: 48px 0; }
-
-  /* Full-width banner */
-  .banner {
-    background: var(--hint-green);
-    padding: 32px 80px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .banner-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 300;
-    color: white;
-  }
-
-  .banner-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-left: auto;
-    white-space: nowrap;
-  }
-
-  /* Marker tags */
+  /* Tag */
   .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
     padding: 6px 16px;
     border: 1px solid var(--line);
     font-family: 'DM Mono', monospace;
@@ -943,28 +609,15 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--hint-green-pale);
-    margin-right: 8px;
-    margin-bottom: 8px;
+    margin-right: 8px; margin-bottom: 8px;
   }
-
-  .tag-dot {
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--hint-green-pale);
-  }
-
-  .s-light .tag {
-    border-color: rgba(45,106,79,0.2);
-    color: var(--hint-green);
-  }
-
+  .tag-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--hint-green-pale); }
+  .s-light .tag { border-color: rgba(45,106,79,0.2); color: var(--hint-green); }
   .s-light .tag-dot { background: var(--hint-green); }
 
-  /* Final CTA button */
+  /* CTA */
   .cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
+    display: inline-flex; align-items: center; gap: 16px;
     padding: 18px 40px;
     border: 1px solid var(--hint-green);
     color: var(--hint-green-pale);
@@ -976,20 +629,30 @@
     transition: background 0.3s, color 0.3s;
     cursor: pointer;
   }
+  .cta-btn:hover { background: var(--hint-green); color: white; }
 
-  .cta-btn:hover {
-    background: var(--hint-green);
-    color: white;
-  }
+  /* Misc */
+  .divider { width: 48px; height: 1px; background: var(--hint-green); margin: 28px 0; }
+  .divider-center { margin: 40px auto; }
+  .rule { width: 100%; height: 1px; background: var(--line); margin: 32px 0; }
+  .footnote { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--mist); opacity: 0.5; margin-top: 4px; }
 
-  .footnote {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--mist);
-    opacity: 0.5;
-    margin-top: 4px;
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes expandLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
 </style>
 </head>
 <body>
@@ -999,7 +662,7 @@
 <div class="progress-bar" id="progressBar"></div>
 
 <nav>
-  <div class="nav-logo">HINT® — Brand Innovation Brief</div>
+  <div class="nav-logo">HINT® Brand Innovation Brief</div>
   <ul class="nav-links">
     <li><a href="#opportunity">Opportunity</a></li>
     <li><a href="#trust">Trust</a></li>
@@ -1009,23 +672,13 @@
   </ul>
 </nav>
 
-<!-- ========== HERO ========== -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
-
-  <div class="hero-eyebrow">Justin Hinote — Brand Innovation Candidate</div>
-
-  <h1 class="hero-headline">
-    Trust is<br>
-    the <em>product</em><br>
-    HINT sells.
-  </h1>
-
-  <p class="hero-subtext">
-    A home is the most trusted, highest-stakes place a person inhabits. Building brand for an AI home intelligence platform means building a system of earned trust — with homeowners and the enterprise partners who reach them first.
-  </p>
-
+  <div class="hero-eyebrow">Justin Hinote, Brand Innovation Candidate</div>
+  <h1 class="hero-headline">Trust is<br>the <em>product</em><br>HINT sells.</h1>
+  <p class="hero-subtext">A home is the most trusted, highest-stakes place a person inhabits. Building brand for an AI home intelligence platform means building a system of earned trust, with homeowners and the enterprise partners who reach them first.</p>
   <div class="hero-meta">
     <div class="hero-meta-item">
       <span class="hero-meta-label">Company</span>
@@ -1037,159 +690,108 @@
     </div>
     <div class="hero-meta-item">
       <span class="hero-meta-label">Stage</span>
-      <span class="hero-meta-value">Pre-Launch → Spring 2025</span>
+      <span class="hero-meta-value">Pre-Launch, Spring 2025</span>
     </div>
     <div class="hero-meta-item">
       <span class="hero-meta-label">Role</span>
       <span class="hero-meta-value">Director, Brand Innovation</span>
     </div>
   </div>
-
   <div class="hero-scroll-cue">
     <div class="scroll-line"></div>
     <span class="scroll-text">Scroll to explore</span>
   </div>
 </section>
 
-<!-- ========== OPPORTUNITY ========== -->
+<!-- OPPORTUNITY -->
 <section id="opportunity" class="s-dark">
   <div class="section-label"><span class="section-num">01</span>The Opportunity</div>
-
   <div class="two-col-wide">
     <div>
-      <h2 class="section-headline reveal">
-        A category is forming.<br>
-        The brand that <em>earns trust first</em> owns it.
-      </h2>
-
-      <p class="body-text reveal reveal-delay-1">
-        HINT isn't competing in the crowded smart-home hardware war — it's building the decision layer on top. An AI-powered operating system for homeownership that simplifies complexity, predicts problems, and routes homeowners toward better outcomes.
-      </p>
-
+      <h2 class="section-headline reveal">A category is forming.<br>The brand that <em>earns trust first</em> owns it.</h2>
+      <p class="body-text reveal reveal-delay-1">HINT isn't competing in the crowded smart-home hardware war. It's building the decision layer on top: an AI-powered operating system for homeownership that simplifies complexity, predicts problems, and routes homeowners toward better outcomes.</p>
       <div class="divider reveal reveal-delay-2"></div>
-
-      <p class="body-text reveal reveal-delay-2">
-        The go-to-market is enterprise-first: distribution through mortgage lenders, insurers, builders, and utilities — channels that already carry trust equity with homeowners. The brand mandate is to inherit that trust, amplify it, and turn it into consumer loyalty at scale.
-      </p>
-
-      <p class="body-text reveal reveal-delay-3" style="margin-top:24px;">
-        Spring launch is not a soft open. It's the moment HINT's brand promise becomes visible to partners and consumers simultaneously. What gets built in the next 90 days sets the narrative for years.
-      </p>
+      <p class="body-text reveal reveal-delay-2">The go-to-market is enterprise-first: distribution through mortgage lenders, insurers, builders, and utilities, channels that already carry trust equity with homeowners. The brand mandate is to inherit that trust, amplify it, and turn it into consumer loyalty at scale.</p>
+      <p class="body-text reveal reveal-delay-3" style="margin-top:24px;">Spring launch is not a soft open. It's the moment HINT's brand promise becomes visible to partners and consumers simultaneously. What gets built in the next 90 days sets the narrative for years.</p>
     </div>
-
     <div>
-      <div class="stat-grid reveal reveal-delay-1" style="grid-template-columns:1fr; background:rgba(45,106,79,0.1); border-color:rgba(45,106,79,0.15);">
-        <div class="stat-block" style="background:rgba(45,106,79,0.08);">
+      <div class="reveal reveal-delay-1" style="display:grid;gap:1px;background:rgba(45,106,79,0.15);border:1px solid rgba(45,106,79,0.15);margin-top:8px;">
+        <div style="background:rgba(45,106,79,0.08);padding:40px 32px;">
           <div class="stat-num">$8,808</div>
           <div class="stat-label">Avg. annual home maintenance</div>
-          <div class="stat-detail" style="color:var(--mist);">Homeowners are flying blind on the largest cost category most don't see coming. Bankrate, 2025.</div>
+          <div class="stat-detail">Homeowners are flying blind on the largest cost category most never see coming. Bankrate, 2025.</div>
         </div>
-        <div class="stat-block" style="background:rgba(45,106,79,0.08); border-top:1px solid rgba(45,106,79,0.15);">
+        <div style="background:rgba(45,106,79,0.08);padding:40px 32px;border-top:1px solid rgba(45,106,79,0.15);">
           <div class="stat-num">$600B+</div>
           <div class="stat-label">Home improvement market, 2025</div>
-          <div class="stat-detail" style="color:var(--mist);">Harvard JCHS projects sustained spend above $600B driven by aging housing stock and electrification.</div>
+          <div class="stat-detail">Harvard JCHS projects sustained spend above $600B driven by aging housing stock and electrification.</div>
         </div>
-        <div class="stat-block" style="background:rgba(45,106,79,0.08); border-top:1px solid rgba(45,106,79,0.15);">
-          <div class="stat-num">∞</div>
-          <div class="stat-label">Nobody owns this layer yet</div>
-          <div class="stat-detail" style="color:var(--mist);">No platform has unified homeowner lifecycle intelligence. HINT can be that category creator — if the brand is built right.</div>
+        <div style="background:rgba(45,106,79,0.08);padding:40px 32px;border-top:1px solid rgba(45,106,79,0.15);">
+          <div class="stat-num">Zero</div>
+          <div class="stat-label">Platforms that own this layer</div>
+          <div class="stat-detail">No platform has unified homeowner lifecycle intelligence. HINT can be that category creator, if the brand is built right.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BANNER -->
 <div class="banner">
   <div class="banner-text">"Homes are becoming active energy systems. Device proliferation has created overwhelming complexity."</div>
-  <div class="banner-label">HINT — LinkedIn, 2025</div>
+  <div class="banner-label">HINT, LinkedIn 2025</div>
 </div>
 
-<!-- ========== TRUST ========== -->
+<!-- TRUST -->
 <section id="trust" class="s-light">
   <div class="section-label"><span class="section-num">02</span>Why Trust Is Imperative</div>
-
-  <h2 class="section-headline reveal">
-    Trust isn't a brand value.<br>
-    It's the <em>entire thesis.</em>
-  </h2>
-
-  <p class="body-text reveal reveal-delay-1">
-    HINT operates at the intersection of three simultaneous vulnerabilities: financial (savings claims and referral economics), physical (home safety and integrity), and informational (documents, identity, address, energy data). In that environment, trust isn't a marketing layer — it's the core product architecture.
-  </p>
-
-  <div class="pull-quote reveal reveal-delay-2">
-    "Trust is a willingness to be vulnerable under uncertainty. Brand trust is confidence that a brand will act in the consumer's interest precisely when the stakes are highest."
-  </div>
-
+  <h2 class="section-headline reveal">Trust isn't a brand value.<br>It's the <em>entire thesis.</em></h2>
+  <p class="body-text reveal reveal-delay-1">HINT operates at the intersection of three simultaneous vulnerabilities: financial (savings claims and referral economics), physical (home safety and integrity), and informational (documents, identity, address, energy data). In that environment, trust isn't a marketing layer. It's the core product architecture.</p>
+  <div class="pull-quote reveal reveal-delay-2">"Trust is a willingness to be vulnerable under uncertainty. Brand trust is confidence that a brand will act in the consumer's interest precisely when the stakes are highest."</div>
   <div class="trust-dims reveal reveal-delay-2">
     <div class="trust-dim">
       <div class="trust-dim-hover"></div>
       <div class="trust-dim-icon">A</div>
       <div class="trust-dim-title">Ability</div>
-      <div class="trust-dim-body">Can HINT actually do what it claims? Recommendations must be provable, auditable, and demonstrated — not asserted. "Your HVAC is 11 years old, filter type Y, climate zone Z" beats black-box AI.</div>
+      <div class="trust-dim-body">Can HINT actually do what it claims? Recommendations must be provable, auditable, and demonstrated. Not asserted. "Your HVAC is 11 years old, filter type Y, climate zone Z" beats black-box AI.</div>
     </div>
     <div class="trust-dim">
       <div class="trust-dim-hover"></div>
       <div class="trust-dim-icon">B</div>
       <div class="trust-dim-title">Benevolence</div>
-      <div class="trust-dim-body">Does HINT act in the homeowner's interest — or the referral partner's? The "deals" promise is a double-edged sword. Brand must proactively convert ambiguity into transparency: disclose relationships, define "vetted," show alternatives.</div>
+      <div class="trust-dim-body">Does HINT act in the homeowner's interest, or the referral partner's? The "deals" promise is a double-edged sword. Brand must proactively convert ambiguity into transparency: disclose relationships, define "vetted," show alternatives.</div>
     </div>
     <div class="trust-dim">
       <div class="trust-dim-hover"></div>
       <div class="trust-dim-icon">I</div>
       <div class="trust-dim-title">Integrity</div>
-      <div class="trust-dim-body">Does the brand hold to its stated principles even when it's costly? A homeowner-first charter — published, enforced, measurable — is what separates HINT from yet another app asking for data without earning the right.</div>
+      <div class="trust-dim-body">Does the brand hold to its stated principles even when it's costly? A homeowner-first charter, published, enforced, and measurable, is what separates HINT from yet another app asking for data without earning the right.</div>
     </div>
   </div>
-
   <div class="rule" style="margin-top:48px;"></div>
-
   <div class="two-col reveal" style="margin-top:0;">
     <div>
-      <p class="body-text">
-        Enterprise partners — lenders, insurers, servicers — already measure trust as a quantifiable asset. J.D. Power's mortgage and home insurance frameworks both treat "level of trust" as a core satisfaction dimension, alongside communication and ease of doing business.
-      </p>
-      <p class="body-text" style="margin-top:20px;">
-        That's the strategic unlock: enterprise partners don't just distribute HINT — they <em>lend their trust signal</em> to it. A startup that can plug into those established trust systems shortens consumer adoption dramatically.
-      </p>
+      <p class="body-text">Enterprise partners, including lenders, insurers, and servicers, already measure trust as a quantifiable asset. J.D. Power's mortgage and home insurance frameworks both treat "level of trust" as a core satisfaction dimension, alongside communication and ease of doing business.</p>
+      <p class="body-text" style="margin-top:20px;">That's the strategic unlock: enterprise partners don't just distribute HINT. They <em>lend their trust signal</em> to it. A startup that plugs into those established trust systems shortens consumer adoption dramatically.</p>
     </div>
     <div>
-      <p class="body-text">
-        Consumer AI trust is fragile. Edelman's 2025 Technology Trust Barometer shows global trust in AI hovering around the halfway mark with wide demographic variation. Positioning HINT as "AI-first" creates friction before value lands.
-      </p>
-      <p class="body-text" style="margin-top:20px;">
-        The sharper brand move: lead with <strong>home outcomes</strong> — predictable savings, fewer emergencies, fewer missed maintenance windows — and let the intelligence be the how, not the what.
-      </p>
+      <p class="body-text">Consumer AI trust is fragile. Edelman's 2025 Technology Trust Barometer shows global trust in AI hovering around the halfway mark with wide demographic variation. Positioning HINT as "AI-first" creates friction before value lands.</p>
+      <p class="body-text" style="margin-top:20px;">The sharper brand move: lead with <strong>home outcomes</strong>: predictable savings, fewer emergencies, fewer missed maintenance windows, and let the intelligence be the how, not the what.</p>
     </div>
   </div>
 </section>
 
-<!-- ========== ARCHITECTURE ========== -->
+<!-- ARCHITECTURE -->
 <section id="architecture" class="s-dark">
   <div class="section-label"><span class="section-num">03</span>The Trust Architecture</div>
-
   <div class="two-col-wide">
     <div>
-      <h2 class="section-headline reveal">
-        Two audiences.<br>
-        One <em>coherent</em> brand system.
-      </h2>
-
-      <p class="body-text reveal reveal-delay-1">
-        Enterprise distribution doesn't mean sacrificing homeowner intimacy. The strongest brands in this model borrow enterprise-grade assurances under the hood while keeping the end-user experience calm, personal, and protective.
-      </p>
-
+      <h2 class="section-headline reveal">Two audiences.<br>One <em>coherent</em> brand system.</h2>
+      <p class="body-text reveal reveal-delay-1">Enterprise distribution doesn't mean sacrificing homeowner intimacy. The strongest brands in this model borrow enterprise-grade assurances under the hood while keeping the end-user experience calm, personal, and protective.</p>
       <div class="divider reveal reveal-delay-2"></div>
-
-      <p class="body-text reveal reveal-delay-2">
-        The house is not just an asset — it's identity, safety, and routine. Brand that feels like enterprise software in that context loses. Brand that feels like an advocate who happens to have institutional credibility wins.
-      </p>
+      <p class="body-text reveal reveal-delay-2">The house is not just an asset, it's identity, safety, and routine. Brand that feels like enterprise software in that context loses. Brand that feels like an advocate who happens to have institutional credibility wins.</p>
     </div>
-
     <div class="reveal reveal-delay-2">
       <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--mist);text-transform:uppercase;margin-bottom:24px;">Trust Architecture Layers</div>
-
       <div class="arch-diagram">
         <div class="arch-layer">
           <div class="arch-label">Partner Grade</div>
@@ -1204,7 +806,7 @@
           <div class="arch-content" style="border-color:rgba(64,145,108,0.3);">
             <div class="arch-item"><div class="arch-dot"></div>Homeowner-first charter</div>
             <div class="arch-item"><div class="arch-dot"></div>Plain-language privacy</div>
-            <div class="arch-item"><div class="arch-dot"></div>Disclosure of referral economics</div>
+            <div class="arch-item"><div class="arch-dot"></div>Disclosed referral economics</div>
           </div>
         </div>
         <div class="arch-layer" style="margin-top:2px;">
@@ -1216,65 +818,61 @@
           </div>
         </div>
       </div>
-
-      <p class="body-text" style="font-size:13px;margin-top:24px;">
-        Trust flows downward: partner confidence enables brand promise, brand promise shapes product behavior, product behavior creates homeowner loyalty.
-      </p>
+      <p class="body-text" style="font-size:16px;margin-top:24px;">Trust flows downward: partner confidence enables brand promise, brand promise shapes product behavior, product behavior creates homeowner loyalty.</p>
     </div>
   </div>
-
   <div class="pillar-grid">
     <div class="pillar-card reveal">
       <div class="pillar-accent"></div>
-      <div class="pillar-num">01 — Narrative</div>
+      <div class="pillar-num">01. Narrative</div>
       <div class="pillar-title">Outcomes, Not AI</div>
-      <div class="pillar-body">Lead with "fewer emergencies, predictable costs, smarter decisions." Let the intelligence be how HINT delivers — not the brand's primary identity. AI as promise creates skepticism; savings as proof creates loyalty.</div>
+      <div class="pillar-body">Lead with "fewer emergencies, predictable costs, smarter decisions." Let the intelligence be how HINT delivers, not the brand's primary identity. AI as promise creates skepticism; savings as proof creates loyalty.</div>
     </div>
     <div class="pillar-card reveal reveal-delay-1">
       <div class="pillar-accent"></div>
-      <div class="pillar-num">02 — Transparency</div>
+      <div class="pillar-num">02. Transparency</div>
       <div class="pillar-title">Trust as Content</div>
-      <div class="pillar-body">A trust center isn't a marketing page — it's a legible explanation of what HINT collects, why, and what it will never do. HINT's PCI-compliant payment handling and privacy officer structure are genuine proof points that need elevation out of legal pages.</div>
+      <div class="pillar-body">A trust center isn't a marketing page. It's a legible explanation of what HINT collects, why, and what it will never do. HINT's PCI-compliant payment handling and privacy officer structure are genuine proof points that need elevation out of legal pages.</div>
     </div>
     <div class="pillar-card reveal reveal-delay-2">
       <div class="pillar-accent"></div>
-      <div class="pillar-num">03 — Partner Credibility</div>
+      <div class="pillar-num">03. Partner Credibility</div>
       <div class="pillar-title">Inherited Trust</div>
-      <div class="pillar-body">Lenders and insurers earn homeowner trust over decades. Co-branded launch moments with those partners signal institutional validation instantly — converting enterprise distribution into consumer trust currency.</div>
+      <div class="pillar-body">Lenders and insurers earn homeowner trust over decades. Co-branded launch moments with those partners signal institutional validation instantly, converting enterprise distribution into consumer trust currency.</div>
     </div>
     <div class="pillar-card reveal reveal-delay-1">
       <div class="pillar-accent"></div>
-      <div class="pillar-num">04 — Proof Loops</div>
+      <div class="pillar-num">04. Proof Loops</div>
       <div class="pillar-title">Show Your Work</div>
-      <div class="pillar-body">Every HINT recommendation surfaces its reasoning in plain language. Explainable intelligence — aligned to NIST AI RMF's transparency and accountability attributes — is both a product UX decision and a brand trust cue.</div>
+      <div class="pillar-body">Every HINT recommendation surfaces its reasoning in plain language. Explainable intelligence, aligned to NIST AI RMF's transparency and accountability attributes, is both a product UX decision and a brand trust cue.</div>
     </div>
     <div class="pillar-card reveal reveal-delay-2">
       <div class="pillar-accent"></div>
-      <div class="pillar-num">05 — Charter</div>
+      <div class="pillar-num">05. Charter</div>
       <div class="pillar-title">Homeowner-First Pledge</div>
-      <div class="pillar-body">Codify what HINT will and won't do: only recommend vendors under defined criteria, disclose all referral compensation, show alternatives, never sell data. Published, enforced, and measurable — this is brand as governance.</div>
+      <div class="pillar-body">Codify what HINT will and won't do: only recommend vendors under defined criteria, disclose all referral compensation, show alternatives, never sell data. Published, enforced, and measurable. This is brand as governance.</div>
     </div>
     <div class="pillar-card reveal reveal-delay-3">
       <div class="pillar-accent"></div>
-      <div class="pillar-num">06 — Identity</div>
+      <div class="pillar-num">06. Identity</div>
       <div class="pillar-title">Intimate, Not Institutional</div>
-      <div class="pillar-body">HINT must feel like a trusted advisor who has your home's best interests, not enterprise SaaS. Voice, visual system, and UX must evoke calm competence — the aesthetic of care, not the aesthetic of complexity.</div>
+      <div class="pillar-body">HINT must feel like a trusted advisor with your home's best interests at heart, not enterprise SaaS. Voice, visual system, and UX must evoke calm competence: the aesthetic of care, not the aesthetic of complexity.</div>
     </div>
   </div>
 </section>
 
-<!-- ========== TWO-SIDED SPLIT ========== -->
+<!-- TWO-SIDED -->
 <section id="two-sided">
   <div class="split-panel">
     <div class="split-left">
       <div class="split-eyebrow">Consumer Trust</div>
       <div class="split-headline">What homeowners need to believe</div>
       <ul class="split-list">
-        <li><div class="split-list-dot"></div>"HINT gives me better advice than I'd find on my own — and it's working for me, not a vendor."</li>
+        <li><div class="split-list-dot"></div>"HINT gives me better advice than I'd find on my own, and it's working for me, not a vendor."</li>
         <li><div class="split-list-dot"></div>"My data is protected and I know exactly what you have and why."</li>
         <li><div class="split-list-dot"></div>"HINT shows its reasoning. I can audit a recommendation before I act."</li>
         <li><div class="split-list-dot"></div>"This feels like a personal advisor, not another app trying to monetize my inbox."</li>
-        <li><div class="split-list-dot"></div>"When something goes wrong with my home, HINT helps me — fast and without friction."</li>
+        <li><div class="split-list-dot"></div>"When something goes wrong with my home, HINT helps me fast and without friction."</li>
       </ul>
     </div>
     <div class="split-right">
@@ -1282,7 +880,7 @@
       <div class="split-headline">What partners need to believe</div>
       <ul class="split-list">
         <li><div class="split-list-dot"></div>"HINT's security and compliance posture won't create reputational risk for us."</li>
-        <li><div class="split-list-dot"></div>"Embedding HINT increases our customer retention and NPS — measurably."</li>
+        <li><div class="split-list-dot"></div>"Embedding HINT increases our customer retention and NPS, measurably."</li>
         <li><div class="split-list-dot"></div>"HINT reduces preventable claims losses and inbound service load."</li>
         <li><div class="split-list-dot"></div>"Their homeowner-first charter won't conflict with our regulatory obligations."</li>
         <li><div class="split-list-dot"></div>"We can co-brand this confidently. Our trust lends to HINT; HINT's innovation lends back."</li>
@@ -1291,53 +889,34 @@
   </div>
 </section>
 
-<!-- ========== THESIS STATEMENT ========== -->
+<!-- THESIS -->
 <section id="thesis">
   <div class="thesis-bg-text">HINT</div>
-
   <div class="section-label reveal"><span class="section-num">04</span>The Brand Thesis</div>
-
-  <h2 class="section-headline reveal" style="max-width:1000px;">
-    The home is the most consequential<br>financial asset most Americans hold.<br>
-    <em>HINT earns the right to advise it.</em>
-  </h2>
-
+  <h2 class="section-headline reveal" style="max-width:1000px;">The home is the most consequential<br>financial asset most Americans hold.<br><em>HINT earns the right to advise it.</em></h2>
   <div class="rule" style="max-width:600px;"></div>
-
-  <p class="body-text reveal" style="max-width:680px;">
-    That isn't a positioning statement — it's an operating philosophy. Every brand decision, every product interaction, every partner agreement either earns that right further or erodes it. Brand is the accountability mechanism. It's what keeps every team — product, engineering, partnerships, operations — anchored to the same north star: homeowner trust.
-  </p>
-
+  <p class="body-text reveal" style="max-width:680px;">That isn't a positioning statement. It's an operating philosophy. Every brand decision, every product interaction, every partner agreement either earns that right further or erodes it. Brand is the accountability mechanism. It's what keeps every team, product, engineering, partnerships, and operations, anchored to the same north star: homeowner trust.</p>
   <div class="divider reveal" style="margin-top:48px;"></div>
-
   <div class="two-col reveal" style="margin-top:0;max-width:900px;">
     <div>
-      <div class="section-label" style="color:var(--hint-green-pale);margin-bottom:12px;"><span class="section-num"></span>The pivot from AI to outcomes</div>
-      <p class="body-text" style="font-size:14px;">AI as identity = skepticism before value. HINT's public copy already seeds a "problem-first" narrative — overwhelm, complexity, missed maintenance. The brand should deepen that story: specificity of outcome is the trust signal. Not "AI-powered insights," but "you'll avoid your next $4,200 HVAC emergency."</p>
+      <div class="section-label" style="color:var(--hint-green-pale);margin-bottom:12px;">The pivot from AI to outcomes</div>
+      <p class="body-text" style="font-size:16px;">AI as identity creates skepticism before value. HINT's public copy already seeds a "problem-first" narrative: overwhelm, complexity, missed maintenance. The brand should deepen that story: specificity of outcome is the trust signal. Not "AI-powered insights," but "you'll avoid your next $4,200 HVAC emergency."</p>
     </div>
     <div>
-      <div class="section-label" style="color:var(--hint-green-pale);margin-bottom:12px;"><span class="section-num"></span>The referral economics transparency play</div>
-      <p class="body-text" style="font-size:14px;">The waitlist promise of "insights and deals" will trigger suspicion unless HINT leads with the disclosure. Proactively publishing referral criteria, compensation structures, and what "vetted" means converts the revenue model from liability to proof of benevolence. Transparency at this level is rare — which is precisely why it works.</p>
+      <div class="section-label" style="color:var(--hint-green-pale);margin-bottom:12px;">The referral economics transparency play</div>
+      <p class="body-text" style="font-size:16px;">The waitlist promise of "insights and deals" will trigger suspicion unless HINT leads with disclosure. Proactively publishing referral criteria, compensation structures, and what "vetted" means converts the revenue model from liability to proof of benevolence. Transparency at this level is rare, which is precisely why it works.</p>
     </div>
   </div>
 </section>
 
-<!-- ========== ROADMAP ========== -->
+<!-- ROADMAP -->
 <section id="roadmap" class="s-light">
   <div class="section-label"><span class="section-num">05</span>Spring Launch Roadmap</div>
-
   <div class="two-col">
     <div>
-      <h2 class="section-headline reveal">
-        90 days to a brand<br>that <em>earns trust</em><br>at launch.
-      </h2>
-
-      <p class="body-text reveal reveal-delay-1">
-        Brand for a stealth-to-launch moment isn't about awareness campaigns — it's about building the infrastructure of credibility that lets awareness convert. The sequence matters enormously.
-      </p>
-
+      <h2 class="section-headline reveal">90 days to a brand<br>that <em>earns trust</em><br>at launch.</h2>
+      <p class="body-text reveal reveal-delay-1">Brand for a stealth-to-launch moment isn't about awareness campaigns. It's about building the infrastructure of credibility that lets awareness convert. The sequence matters enormously.</p>
       <div class="divider reveal reveal-delay-2"></div>
-
       <div style="margin-top:0;">
         <div style="margin-bottom:20px;" class="reveal reveal-delay-2">
           <div class="tag"><div class="tag-dot"></div>Charlotte, NC HQ</div>
@@ -1345,13 +924,12 @@
           <div class="tag"><div class="tag-dot"></div>Insurance Adjacent</div>
           <div class="tag"><div class="tag-dot"></div>Mortgage Dense</div>
         </div>
-        <p class="body-text" style="font-size:13px;">Charlotte's enterprise ecosystem isn't incidental — it's the distribution playbook. Geographic proximity to financial services and insurance HQs makes trust-led partner conversations achievable before a dollar of paid media is spent.</p>
+        <p class="body-text" style="font-size:16px;">Charlotte's enterprise ecosystem isn't incidental. It's the distribution playbook. Geographic proximity to financial services and insurance HQs makes trust-led partner conversations achievable before a dollar of paid media is spent.</p>
       </div>
     </div>
-
     <div class="roadmap reveal reveal-delay-1">
       <div class="roadmap-item roadmap-active">
-        <div class="roadmap-time">Now → 30 Days</div>
+        <div class="roadmap-time">Now to 30 Days</div>
         <div class="roadmap-dot"></div>
         <div class="roadmap-content">
           <div class="roadmap-phase">Trust Foundation</div>
@@ -1359,7 +937,7 @@
         </div>
       </div>
       <div class="roadmap-item">
-        <div class="roadmap-time">30 → 60 Days</div>
+        <div class="roadmap-time">30 to 60 Days</div>
         <div class="roadmap-dot"></div>
         <div class="roadmap-content">
           <div class="roadmap-phase">Enterprise Narrative</div>
@@ -1367,7 +945,7 @@
         </div>
       </div>
       <div class="roadmap-item">
-        <div class="roadmap-time">60 → 90 Days</div>
+        <div class="roadmap-time">60 to 90 Days</div>
         <div class="roadmap-dot"></div>
         <div class="roadmap-content">
           <div class="roadmap-phase">Consumer Activation</div>
@@ -1379,100 +957,72 @@
         <div class="roadmap-dot"></div>
         <div class="roadmap-content">
           <div class="roadmap-phase">Trust Feedback Loop</div>
-          <div class="roadmap-items">Homeowner trust scores measured and indexed. Partner NPS and retention impact tracked. Brand guidelines enforced across all partner touchpoints. Category authority built through thought leadership in homeownership intelligence space.</div>
+          <div class="roadmap-items">Homeowner trust scores measured and indexed. Partner NPS and retention impact tracked. Brand guidelines enforced across all partner touchpoints. Category authority built through thought leadership in homeownership intelligence.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== WHY ME ========== -->
+<!-- WHY ME -->
 <section id="why-me" class="s-dark">
   <div class="section-label"><span class="section-num">06</span>The Fit</div>
-
-  <h2 class="section-headline reveal">
-    Twelve years building<br>
-    brand at the intersection<br>
-    of <em>complexity and trust.</em>
-  </h2>
-
-  <p class="body-text reveal reveal-delay-1" style="max-width:680px;margin-bottom:64px;">
-    This isn't a resume play — it's a pattern match. Every major chapter of my career has been about translating something technically complex and high-stakes into a brand narrative that earns trust with enterprise partners and end users simultaneously.
-  </p>
-
+  <h2 class="section-headline reveal">Twelve years building<br>brand at the intersection<br>of <em>complexity and trust.</em></h2>
+  <p class="body-text reveal reveal-delay-1" style="max-width:680px;margin-bottom:64px;">This isn't a resume play. It's a pattern match. Every major chapter of my career has been about translating something technically complex and high-stakes into a brand narrative that earns trust with enterprise partners and end users simultaneously.</p>
   <div class="exp-grid reveal">
     <div class="exp-card">
       <div class="exp-co">Oracle Data Cloud</div>
       <div class="exp-role">Director of Marketing</div>
-      <div class="exp-proof">Led developer marketing for AddThis APIs — rebuilding docs, examples, and messaging architecture for global teams after acquisition. Reversed declining user curve and added 2M+ users. This is the enterprise credibility playbook: inherited trust from an existing brand, built the narrative, converted it to adoption.</div>
+      <div class="exp-proof">Led developer marketing for AddThis APIs, rebuilding docs, examples, and messaging architecture for global teams after acquisition. Reversed declining user curve and added 2M+ users. This is the enterprise credibility playbook: inherited trust from an existing brand, built the narrative, converted it to adoption.</div>
       <div class="exp-badge">Enterprise GTM</div>
     </div>
     <div class="exp-card">
-      <div class="exp-co">Uber — Southeast</div>
+      <div class="exp-co">Uber, Southeast</div>
       <div class="exp-role">Senior Marketing Manager</div>
-      <div class="exp-proof">30+ city launches. Built the region's first public-private partnership to subsidize rides and reduce congestion — negotiating institutional trust on both sides simultaneously. This is what HINT's enterprise partner motion looks like: bringing skeptical institutional actors into a shared value story.</div>
+      <div class="exp-proof">30+ city launches. Built the region's first public-private partnership to subsidize rides and reduce congestion, negotiating institutional trust on both sides simultaneously. This is what HINT's enterprise partner motion looks like: bringing skeptical institutional actors into a shared value story.</div>
       <div class="exp-badge">Partnership-Led Growth</div>
     </div>
     <div class="exp-card">
       <div class="exp-co">MakeMine, Inc.</div>
-      <div class="exp-role">Co-Founder & Head of Growth</div>
+      <div class="exp-role">Co-Founder and Head of Growth</div>
       <div class="exp-proof">Built from scratch to $10M+ ARR and successful exit. Owned marketplace brand narrative, partner SDKs, and cross-surface experience. Launched partner programs that sourced all company revenue. This is what pre-launch brand building looks like: no budget, no brand history, all accountability.</div>
       <div class="exp-badge">Successful Exit</div>
     </div>
     <div class="exp-card">
-      <div class="exp-co">Crafted Agency + Queen City AI</div>
+      <div class="exp-co">Crafted Agency and Queen City AI</div>
       <div class="exp-role">Senior Director of Strategy</div>
-      <div class="exp-proof">Defining unified brand narratives across complex AI-powered product ecosystems. AI governance, adoption pathways, measurable ROI — not AI hype. Returned 300% budget ROI through MMM-informed channel optimization. This is exactly the governance-first AI narrative HINT needs to build partner confidence.</div>
+      <div class="exp-proof">Defining unified brand narratives across complex AI-powered product ecosystems. AI governance, adoption pathways, measurable ROI, not AI hype. Returned 300% budget ROI through MMM-informed channel optimization. This is exactly the governance-first AI narrative HINT needs to build partner confidence.</div>
       <div class="exp-badge">AI Governance</div>
     </div>
   </div>
-
-  <div class="pull-quote reveal" style="margin-top:64px;">
-    "The leader HINT needs doesn't just build brand awareness — they build a trust system that survives enterprise diligence and feels humane to homeowners."
-  </div>
-
+  <div class="pull-quote reveal" style="margin-top:64px;">"The leader HINT needs doesn't just build brand awareness. They build a trust system that survives enterprise diligence and feels humane to homeowners."</div>
   <div class="two-col reveal" style="margin-top:48px;">
     <div>
       <div class="section-label" style="color:var(--hint-green-pale);margin-bottom:16px;">What I bring to enterprise conversations</div>
-      <p class="body-text" style="font-size:14px;">Oracle's enterprise relationships. Uber's institutional partnership experience. MakeMine's marketplace partner SDK and revenue program. Queen City AI's AI governance and readiness audit practice. These aren't credentials — they're a proven playbook for the conversations HINT needs to have with lenders, insurers, and builders in 2025.</p>
+      <p class="body-text" style="font-size:16px;">Oracle's enterprise relationships. Uber's institutional partnership experience. MakeMine's marketplace partner SDK and revenue program. Queen City AI's AI governance and readiness audit practice. These aren't credentials. They're a proven playbook for the conversations HINT needs to have with lenders, insurers, and builders in 2025.</p>
     </div>
     <div>
       <div class="section-label" style="color:var(--hint-green-pale);margin-bottom:16px;">What I bring to homeowner trust</div>
-      <p class="body-text" style="font-size:14px;">MakeMine's marketplace narrative — building trust between buyers and makers at scale. Crafted's unified brand system work. AI governance that prioritizes accountability, transparency, and explainability. I understand why people don't trust AI, and I know how to build brand systems that convert skepticism into adoption without relying on hype.</p>
+      <p class="body-text" style="font-size:16px;">MakeMine's marketplace narrative, building trust between buyers and makers at scale. Crafted's unified brand system work. AI governance that prioritizes accountability, transparency, and explainability. I understand why people don't trust AI, and I know how to build brand systems that convert skepticism into adoption without relying on hype.</p>
     </div>
   </div>
 </section>
 
-<!-- ========== CLOSE ========== -->
+<!-- CLOSE -->
 <section id="close">
   <div class="close-glow"></div>
-
-  <div class="section-label reveal" style="justify-content:center;">
-    <span class="section-num">07</span>The Closing Thought
-  </div>
-
-  <h2 class="close-headline reveal">
-    Home intelligence fails<br>
-    when it feels like <em>yet another app</em><br>
-    asking for data.
-  </h2>
-
-  <p class="close-sub reveal reveal-delay-1">
-    HINT's brand job is to be the exception — the platform that earns the right to know about your home because it consistently acts in your interest. That's not a campaign. That's a system. And building trust systems at the intersection of enterprise credibility and human care is precisely what I do.
-  </p>
-
+  <div class="section-label reveal" style="justify-content:center;"><span class="section-num">07</span>The Closing Thought</div>
+  <h2 class="close-headline reveal">Home intelligence fails<br>when it feels like <em>yet another app</em><br>asking for data.</h2>
+  <p class="close-sub reveal reveal-delay-1">HINT's brand job is to be the exception: the platform that earns the right to know about your home because it consistently acts in your interest. That's not a campaign. That's a system. And building trust systems at the intersection of enterprise credibility and human care is precisely what I do.</p>
   <div class="divider divider-center reveal reveal-delay-2"></div>
-
   <div class="close-sig reveal reveal-delay-3">Justin Hinote</div>
-  <div class="close-sig-sub reveal reveal-delay-3">Brand Innovation · Charlotte, NC · hinthome.com opportunity</div>
-
+  <div class="close-sig-sub reveal reveal-delay-3">Brand Innovation, Charlotte NC</div>
   <div style="margin-top:48px;" class="reveal reveal-delay-4">
-    <a href="mailto:" class="cta-btn">
+    <a href="mailto:justinhinote@gmail.com" class="cta-btn">
       Let's build it together
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
-
   <div style="margin-top:80px;padding-top:40px;border-top:1px solid rgba(45,106,79,0.15);display:flex;justify-content:space-between;align-items:center;" class="reveal reveal-delay-4">
     <div class="footnote">Sources: Bankrate 2025 · Harvard JCHS 2025 · J.D. Power Mortgage Origination Study · Edelman Trust Barometer 2025 · NIST AI RMF · McKinsey Digital Trust · WEF Digital Trust Report</div>
     <div class="footnote">HINT® is a registered trademark of Home Hub Labs, Inc.</div>
@@ -1500,7 +1050,6 @@
   }
   animateCursor();
 
-  // Hover states for cursor
   document.querySelectorAll('a, button, .pillar-card, .trust-dim, .exp-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.transform = 'translate(-50%, -50%) scale(2)';
@@ -1515,28 +1064,20 @@
   // Progress bar
   const progressBar = document.getElementById('progressBar');
   window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = (scrolled / maxScroll * 100) + '%';
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    progressBar.style.width = pct + '%';
   });
 
   // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  revealEls.forEach(el => observer.observe(el));
-
-  // Parallax on hero glow
+  // Hero parallax
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
     const glow = document.querySelector('.hero-glow');
-    if (glow) glow.style.transform = `translateY(${scrollY * 0.3}px)`;
+    if (glow) glow.style.transform = `translateY(${window.scrollY * 0.3}px)`;
   });
 </script>
 </body>
